@@ -1,39 +1,88 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
+import RoomCard from "../components/RoomCard";
 import "./Dashboard.css";
+import { createRoom, joinRoom, fetchDashboard } from "../services/rooms";
 
 export default function Dashboard() {
   const navigate = useNavigate();
 
+  const [rooms, setRooms] = useState([]);
+  const [view, setView] = useState("my");
   const [showJoinModal, setShowJoinModal] = useState(false);
   const [roomCode, setRoomCode] = useState("");
-  const [view, setView] = useState("my"); // "my" | "collab"
 
   const username = localStorage.getItem("username") || "User";
 
+  useEffect(() => {
+    fetchDashboard()
+      .then(setRooms)
+      .catch(() => alert("Failed to load dashboard"));
+  }, []);
+
+  const myRooms = rooms.filter((r) => r.role === "owner");
+  const collabRooms = rooms.filter((r) => r.role === "collaborator");
+  const visibleRooms = view === "my" ? myRooms : collabRooms;
+
   function handleSignOut() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    localStorage.clear();
     navigate("/");
+  }
+
+  async function handleCreateRoom() {
+    try {
+      const data = await createRoom("My Room");
+      navigate(`/room/${data.id}`);
+    } catch {
+      alert("Could not create room");
+    }
+  }
+
+  async function handleJoinRoom() {
+    if (!roomCode) return;
+
+    try {
+      await joinRoom(roomCode);
+      navigate(`/room/${roomCode}`);
+    } catch {
+      alert("Invalid room code");
+    }
+  }
+
+  async function handleDeleteRoom(roomId) {
+    try {
+      await fetch(
+        `http://127.0.0.1:8000/api/workspace/delete/${roomId}/`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      setRooms((prev) => prev.filter((r) => r.id !== roomId));
+    } catch {
+      alert("Failed to delete room");
+    }
+  }
+
+  function handleRenameRoom(roomId, newName) {
+    setRooms((prev) =>
+      prev.map((r) =>
+        r.id === roomId ? { ...r, name: newName } : r
+      )
+    );
   }
 
   return (
     <div className="dashboard-root">
-
-      {/* Header */}
       <header className="dashboard-header">
-        <div className="dashboard-header-left">
-          <h2>Welcome, {username} &gt;&gt;&gt;</h2>
-        </div>
-
-        <div className="header-right">
-          <button className="icon-btn">🌗</button>
-          <Button onClick={handleSignOut}>Sign Out</Button>
-        </div>
+        <h2>Welcome, {username} &gt;&gt;&gt;</h2>
+        <Button onClick={handleSignOut}>Sign Out</Button>
       </header>
 
-      {/* Toggle */}
       <div className="dashboard-toggle">
         <button
           className={view === "my" ? "active" : ""}
@@ -49,33 +98,27 @@ export default function Dashboard() {
         </button>
       </div>
 
-      {/* Rooms Section */}
       <main className="dashboard-main">
         <div className="projects-grid">
-          {view === "my" && (
-            <>
-              <div className="project-card" />
-              <div className="project-card" />
-              <div className="project-card" />
-            </>
+          {visibleRooms.length === 0 && (
+            <p style={{ opacity: 0.6 }}>No rooms here yet.</p>
           )}
 
-          {view === "collab" && (
-            <>
-              <div className="project-card" />
-              <div className="project-card" />
-            </>
-          )}
+          {visibleRooms.map((room) => (
+            <RoomCard
+              key={room.id}
+              room={room}
+              onOpen={() => navigate(`/room/${room.id}`)}
+              onDelete={() => handleDeleteRoom(room.id)}
+              onRename={handleRenameRoom}
+            />
+          ))}
         </div>
       </main>
 
-      {/* Floating Action Button */}
       <div className="fab-container">
         <div className="fab-menu">
-          <button
-            className="fab-option"
-            onClick={() => navigate("/room")}
-          >
+          <button className="fab-option" onClick={handleCreateRoom}>
             Create Room
           </button>
           <button
@@ -88,7 +131,6 @@ export default function Dashboard() {
         <button className="fab">+</button>
       </div>
 
-      {/* Join Room Modal */}
       {showJoinModal && (
         <div className="modal-overlay">
           <div className="modal-card">
@@ -109,21 +151,13 @@ export default function Dashboard() {
               >
                 Cancel
               </button>
-
-              <button
-                className="modal-join"
-                onClick={() => {
-                  setShowJoinModal(false);
-                  navigate("/room");
-                }}
-              >
-                Join Room
+              <button className="modal-join" onClick={handleJoinRoom}>
+                Join
               </button>
             </div>
           </div>
         </div>
       )}
-
     </div>
   );
 }

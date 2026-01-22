@@ -209,3 +209,52 @@
   background: var(--accent-hover);
 }
 
+.room-card {
+  background: #0d0d0d;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  padding: 18px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.room-card:hover {
+  border-color: #4caf50;
+  transform: translateY(-2px);
+}
+
+.room-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  cursor: pointer;
+}
+
+.room-owner {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.room-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.room-actions button {
+  background: #111;
+  border: 1px solid #333;
+  color: #ddd;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.room-actions button:hover {
+  border-color: #4caf50;
+  color: #fff;
+}

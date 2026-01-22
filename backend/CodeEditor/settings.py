@@ -48,9 +48,11 @@ INSTALLED_APPS = [
     'workspaces',
     'collaboration',
     'execution',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -143,3 +145,12 @@ import os
 
 JUDGE0_API_KEY = os.getenv("JUDGE0_API_KEY")
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+ASGI_APPLICATION = "CodeEditor.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    }
+}

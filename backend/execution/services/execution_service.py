@@ -1,8 +1,9 @@
 import requests
 import time
 
-# Public Judge0 instance (NO API KEY REQUIRED)
-JUDGE0_URL = "https://judge0-ce.p.sulu.sh"
+# Official Judge0 CE instance
+JUDGE0_URL = "https://ce.judge0.com"
+
 
 HEADERS = {
     "Content-Type": "application/json"

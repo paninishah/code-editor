@@ -1,12 +1,10 @@
 import Editor from "@monaco-editor/react";
 
-export default function CodeEditor({ value, onChange, readOnly }) {
-  const language = "javascript"; // safe default
-
+export default function CodeEditor({ value, onChange, readOnly, language }) {
   return (
     <Editor
       height="100%"
-      language={language}
+      language={language || "javascript"}
       theme="notebook-dark"
       value={value}
       onChange={(val) => onChange(val)}

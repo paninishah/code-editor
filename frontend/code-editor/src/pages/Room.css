@@ -64,3 +64,38 @@
 .output-pane {
   background: #000;
 }
+
+.room-id-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 6px;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+.room-id-label {
+  font-size: 12px;
+  color: #888;
+}
+
+.room-id-value {
+  font-size: 14px;
+  color: #4caf50;
+}
+
+.copy-room-btn {
+  background: transparent;
+  border: 1px solid #333;
+  color: #aaa;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.copy-room-btn:hover {
+  border-color: #4caf50;
+  color: #4caf50;
+}
+

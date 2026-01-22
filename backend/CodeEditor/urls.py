@@ -19,5 +19,5 @@ urlpatterns = [
     path('api/workspace/', include('workspaces.urls')),
 
     # Execution
-    path('execution/', include('execution.urls')),
+    path('api/execution/', include('execution.urls')),
 ]

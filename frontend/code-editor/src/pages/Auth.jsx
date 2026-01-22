@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import { loginUser, signupUser } from "../services/api";
 import "./Auth.css";
-import { loginUser } from "../services/api";
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -21,23 +21,26 @@ export default function Auth() {
       return;
     }
 
-    if (mode === "signup") {
-      // TEMP: signup not wired yet
-      setError("Signup not enabled yet");
-      return;
-    }
+    setLoading(true);
 
     try {
-      setLoading(true);
+      if (mode === "login") {
+        const data = await loginUser(username, password);
 
-      const data = await loginUser(username, password);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username);
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("username", data.username);
+        navigate("/dashboard");
+      } else {
+        await signupUser(username, password);
 
-      navigate("/dashboard");
+        // after successful signup → switch to login
+        setMode("login");
+        setError("Signup successful. Please log in.");
+        setPassword("");
+      }
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -47,7 +50,6 @@ export default function Auth() {
     <div className="auth-root">
       <div className="auth-card">
 
-        {/* Toggle */}
         <div className="auth-toggle">
           <button
             className={mode === "login" ? "active" : ""}
@@ -58,6 +60,7 @@ export default function Auth() {
           >
             Login
           </button>
+
           <button
             className={mode === "signup" ? "active" : ""}
             onClick={() => {
@@ -69,12 +72,10 @@ export default function Auth() {
           </button>
         </div>
 
-        {/* Title */}
         <h2 className="auth-title">
           {mode === "login" ? "Welcome back" : "Create an account"}
         </h2>
 
-        {/* Form */}
         <div className="auth-form">
           <input
             type="text"
