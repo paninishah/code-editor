@@ -1,0 +1,24 @@
+.btn {
+  font-family: var(--font-ui);
+  background: var(--accent-main);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--accent-hover);
+}
+
+.btn-default {
+  padding: 10px 18px;
+  font-size: 14px;
+}
+
+.btn-small {
+  padding: 8px 14px;
+  font-size: 13px;
+}

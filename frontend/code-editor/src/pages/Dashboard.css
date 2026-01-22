@@ -1,0 +1,103 @@
+.dashboard-root {
+  min-height: 100vh;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px 32px;
+}
+
+.header-right {
+  display: flex;
+  gap: 16px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Main */
+.dashboard-main {
+  padding: 40px 80px;
+}
+
+.section-title {
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+/* Projects grid */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 200px);
+  gap: 32px;
+}
+
+.project-card {
+  width: 200px;
+  height: 140px;
+  background: var(--bg-surface);
+  border-radius: 8px;
+}
+
+/* Floating Action Button */
+.fab-container {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  padding-top: 80px;   /* ← IMPORTANT */
+}
+
+
+.fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-main);
+  color: #000;
+  border: none;
+  font-size: 32px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+
+/* Hover menu */
+.fab-menu {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.fab-container:hover .fab-menu {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fab-option {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  white-space: nowrap;
+}
