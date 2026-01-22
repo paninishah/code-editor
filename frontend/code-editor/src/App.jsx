@@ -1,19 +1,54 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard";
-import Room from "./pages/Room";
+import CodeEditor from "./components/CodeEditor";
+import OutputPanel from "./components/OutputPanel";
+import Buttons from "./components/Buttons";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/room/:roomId" element={<Room />} />
-      </Routes>
-    </BrowserRouter>
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      
+      {/* Top Bar */}
+      <header
+        style={{
+          height: "50px",
+          background: "#1e1e1e",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 16px",
+        }}
+      >
+        <span>Room: abc123</span>
+        <span style={{ color: "lime" }}>LIVE</span>
+        <button style={{ background: "red", color: "white" }}>
+          End Session
+        </button>
+      </header>
+
+      {/* Main Area */}
+      <main style={{ flex: 1, display: "flex" }}>
+        <div style={{ flex: 3 }}>
+          <CodeEditor />
+        </div>
+        <div style={{ flex: 1 }}>
+          <OutputPanel />
+        </div>
+      </main>
+
+      {/* Bottom Bar */}
+      <footer
+        style={{
+          height: "50px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "12px",
+          borderTop: "1px solid #ccc",
+        }}
+      >
+        <Buttons />
+      </footer>
+    </div>
   );
 }
 
