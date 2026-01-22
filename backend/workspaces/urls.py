@@ -9,10 +9,10 @@ from .views import (
 )
 
 urlpatterns = [
-    path('create/', create_room),
-    path('join/', join_room),
-    path('save/', save_room),
-    path('', list_dashboard_rooms),
-    path('remove/<int:room_id>/', remove_from_dashboard),
-    path('delete/<int:room_id>/', delete_room),
+    path("create/", create_room),                 # POST
+    path("join/", join_room),                     # POST
+    path("save/", save_room),                     # POST
+    path("", list_dashboard_rooms),               # GET
+    path("remove/", remove_from_dashboard),       # POST
+    path("delete/<int:room_id>/", delete_room),   # DELETE
 ]

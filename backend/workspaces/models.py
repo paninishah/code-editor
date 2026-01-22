@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 class Workspace(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    last_saved_code = models.TextField(blank=True, null=True)
+    code = models.TextField(blank=True, null=True)
+
 
     def __str__(self):
         return f"Workspace {self.id}"

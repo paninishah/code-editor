@@ -33,10 +33,9 @@ def join_room(request):
         return Response({"error": "Room not found"}, status=404)
 
     return Response({
-        "roomId": workspace.id,
-        "owner": workspace.owner.username,
-        "created_at": workspace.created_at
-    })
+    "roomId": workspace.id
+})
+
 
 
 # ✅ SAVE ROOM (bookmark)
@@ -75,19 +74,23 @@ def list_dashboard_rooms(request):
 
 
 # ✅ REMOVE FROM DASHBOARD
-@api_view(['DELETE'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def remove_from_dashboard(request, room_id):
+def remove_from_dashboard(request):
+    room_id = request.data.get("roomId")
+
     deleted, _ = SavedWorkspace.objects.filter(
         user=request.user,
         workspace_id=room_id
     ).delete()
 
     if deleted == 0:
-        return Response({"error": "Room not found in dashboard"}, status=404)
+        return Response(
+            {"error": "Room not found in dashboard"},
+            status=404
+        )
 
     return Response({"message": "Room removed from dashboard"})
-
 
 # ✅ DELETE ROOM (OWNER ONLY)
 @api_view(['DELETE'])
