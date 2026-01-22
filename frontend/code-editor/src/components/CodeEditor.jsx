@@ -6,7 +6,7 @@ export default function CodeEditor({ value, onChange, readOnly }) {
   return (
     <Editor
       height="100%"
-      language="c"
+      language={language}
       theme="notebook-dark"
       value={value}
       onChange={(val) => onChange(val)}

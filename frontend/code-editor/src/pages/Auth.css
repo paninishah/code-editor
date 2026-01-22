@@ -59,3 +59,9 @@
 .auth-form input::placeholder {
   color: var(--text-muted);
 }
+
+.auth-error {
+  color: #ff5f5f;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+}

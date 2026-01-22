@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Button from "../components/Button";
 import "./Dashboard.css";
 
 export default function Dashboard() {
@@ -9,20 +10,26 @@ export default function Dashboard() {
   const [roomCode, setRoomCode] = useState("");
   const [view, setView] = useState("my"); // "my" | "collab"
 
+  const username = localStorage.getItem("username") || "User";
+
+  function handleSignOut() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    navigate("/");
+  }
+
   return (
     <div className="dashboard-root">
 
       {/* Header */}
       <header className="dashboard-header">
-        <div className="header-left">
-          <span className="welcome-text">Welcome, User</span>
+        <div className="dashboard-header-left">
+          <h2>Welcome, {username} &gt;&gt;&gt;</h2>
         </div>
 
         <div className="header-right">
           <button className="icon-btn">🌗</button>
-          <button className="icon-btn" onClick={() => navigate("/")}>
-            Sign Out
-          </button>
+          <Button onClick={handleSignOut}>Sign Out</Button>
         </div>
       </header>
 
