@@ -1,7 +1,18 @@
-export default function CodeEditor() {
+import Editor from "@monaco-editor/react";
+
+export default function CodeEditor({ value, onChange, readOnly }) {
   return (
-    <div style={{ height: "100%", background: "#2d2d2d", color: "white" }}>
-      Code Editor Area
-    </div>
+    <Editor
+      height="100%"
+      defaultLanguage="javascript"
+      value={value}
+      onChange={(v) => onChange(v ?? "")}
+      options={{
+        readOnly,
+        minimap: { enabled: false },
+        fontSize: 14,
+      }}
+    />
   );
 }
+
