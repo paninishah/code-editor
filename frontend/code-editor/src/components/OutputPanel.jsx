@@ -1,7 +1,11 @@
-export default function OutputPanel() {
+export default function OutputPanel({ output, error }) {
   return (
-    <div style={{ height: "100%", background: "black", color: "lime" }}>
-      Output Panel
+    <div className="output-panel">
+      {error ? (
+        <pre className="output-error">{error}</pre>
+      ) : (
+        <pre className="output-text">{output}</pre>
+      )}
     </div>
   );
 }

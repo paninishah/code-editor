@@ -1,0 +1,66 @@
+.landing-root {
+  min-height: 100vh;
+  /* background: var(--bg-main); */
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+/* Header */
+.landing-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px 32px;
+}
+
+/* Main */
+.landing-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 80px;
+}
+
+/* Hero grid */
+.hero {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+/* Big C */
+.hero-letter {
+  font-family: var(--font-hero);
+  font-size: 220px;
+  font-weight: 600;
+  line-height: 0.9;
+  color: var(--text-primary);
+}
+
+/* Words */
+.hero-words {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  row-gap: 18px;
+  font-family: var(--font-hero);
+  font-size: 48px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .landing-main {
+    padding-left: 32px;
+  }
+
+  .hero-letter {
+    font-size: 160px;
+  }
+
+  .hero-words {
+    font-size: 36px;
+  }
+}
