@@ -1,9 +1,8 @@
-from channels.routing import ProtocolTypeRouter, URLRouter
-from users.socket_auth import JWTAuthMiddleware
-import collaboration.routing
+# CodeEditor/routing.py
 
-application = ProtocolTypeRouter({
-    "websocket": JWTAuthMiddleware(
-        URLRouter(collaboration.routing.websocket_urlpatterns)
-    ),
-})
+from django.urls import re_path
+from collaboration.consumers import CodeRoomConsumer
+
+websocket_urlpatterns = [
+    re_path(r"ws/room/(?P<room_id>\w+)/$", CodeRoomConsumer.as_asgi()),
+]
