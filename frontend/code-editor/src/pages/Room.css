@@ -31,6 +31,35 @@
   border-right: 1px solid #1e1e1e;
 }
 
+.editor-pane {
+  display: flex;
+  flex-direction: column;
+  background: #0b0b0b;
+}
+
+/* Language bar */
+.editor-header {
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid #1e1e1e;
+  background: #0b0b0b;
+}
+
+.editor-language {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+/* Monaco container */
+.editor-body {
+  flex: 1;
+}
+
+
 /* Output */
 .output-pane {
   background: #000;

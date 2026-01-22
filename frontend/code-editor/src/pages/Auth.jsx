@@ -1,11 +1,25 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+// import { useState } from "react";
+// import Button from "../components/Button";
+// import "./Auth.css";
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import "./Auth.css";
 
+
+
 export default function Auth() {
-  const [mode, setMode] = useState("login");
+  // const [mode, setMode] = useState("login");
+  // const navigate = useNavigate();
   const navigate = useNavigate();
+
+  const [mode, setMode] = useState("login");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
 
   return (
@@ -44,3 +58,4 @@ export default function Auth() {
     </div>
   );
 }
+

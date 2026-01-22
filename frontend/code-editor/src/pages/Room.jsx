@@ -33,7 +33,13 @@ export default function Room() {
       {/* Main Editor Area */}
       <main className="room-main">
         <div className="editor-pane">
-          <CodeEditor value={code} onChange={setCode} readOnly={false} />
+          <div className="editor-header">
+            <span className="editor-language">C</span>
+          </div>
+
+          <div className="editor-body">
+            <CodeEditor value={code} onChange={setCode} readOnly={false} />
+          </div>
         </div>
 
         <div className="output-pane">
