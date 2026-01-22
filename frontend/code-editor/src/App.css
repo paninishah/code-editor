@@ -17,6 +17,29 @@
 body {
   margin: 0;
   font-family: var(--font-ui);
-  background: var(--bg-main);
   color: var(--text-primary);
+
+  background-color: #000000;
+
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.18) 1.2px,
+    transparent 1.2px
+  );
+  background-size: 24px 24px;
 }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background-color: #000000;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.22) 1.2px,
+    transparent 1.2px
+  );
+  background-size: 24px 24px;
+}
+
+

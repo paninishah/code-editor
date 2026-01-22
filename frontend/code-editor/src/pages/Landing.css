@@ -1,9 +1,11 @@
 .landing-root {
   min-height: 100vh;
-  background: var(--bg-main);
+  /* background: var(--bg-main); */
   display: flex;
   flex-direction: column;
 }
+
+
 
 /* Header */
 .landing-header {

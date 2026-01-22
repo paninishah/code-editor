@@ -14,7 +14,7 @@ export default function Dashboard() {
       <header className="dashboard-header">
         <div className="header-right">
           <button className="icon-btn">🌗</button>
-          <button className="icon-btn" onClick={() => navigate("/auth")}>Sign Out</button>
+          <button className="icon-btn" onClick={() => navigate("/")}>Sign Out</button>
         </div>
       </header>
 
