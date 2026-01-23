@@ -1,12 +1,30 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
-from workspaces.models import Workspace
+from workspaces.models import Workspace, SavedWorkspace
 
 class CodeRoomConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.room_id = self.scope["url_route"]["kwargs"]["room_id"]
         self.group_name = f"room_{self.room_id}"
+
+        # Enforce websocket auth + membership
+        user = self.scope.get("user")
+        if not user or not getattr(user, "is_authenticated", False):
+            await self.close(code=4401)  # unauthorized
+            return
+
+        workspace = await sync_to_async(Workspace.objects.filter(id=self.room_id).first)()
+        if not workspace:
+            await self.close(code=4404)  # not found
+            return
+
+        is_member = await sync_to_async(
+            SavedWorkspace.objects.filter(user=user, workspace_id=self.room_id).exists
+        )()
+        if not is_member:
+            await self.close(code=4403)  # forbidden
+            return
 
         await self.channel_layer.group_add(
             self.group_name,
@@ -16,8 +34,6 @@ class CodeRoomConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
         # Send current room state to the joining user
-        workspace = await sync_to_async(Workspace.objects.get)(id=self.room_id)
-
         await self.send(text_data=json.dumps({
             "type": "init",
             "code": workspace.code or "",

@@ -7,12 +7,9 @@ import Button from "../components/Button";
 import "./Room.css";
 
 const LANGUAGES = ["javascript", "python", "cpp", "c", "java"];
-const API_BASE =
-  import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "") ||
-  "http://127.0.0.1:8000";
-const WS_BASE =
-  import.meta.env.VITE_WS_BASE_URL?.replace(/\/+$/, "") ||
-  "ws://127.0.0.1:8000";
+// Always talk to local backend / websocket
+const API_BASE = "http://127.0.0.1:8000";
+const WS_BASE = "ws://127.0.0.1:8000";
 
 export default function Room() {
   const { roomId } = useParams();
