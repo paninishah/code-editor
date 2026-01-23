@@ -1,4 +1,5 @@
-const BASE_URL = "http://127.0.0.1:8000/api/workspace";
+const BASE_URL = "https://weddings-dedicated-cpu-cds.trycloudflare.com/api/workspace";
+
 
 function authHeaders() {
   const token = localStorage.getItem("token");

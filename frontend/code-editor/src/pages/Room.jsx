@@ -21,9 +21,12 @@ export default function Room() {
   const [running, setRunning] = useState(false);
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
     const socket = new WebSocket(
-      `ws://127.0.0.1:8000/ws/room/${roomId}/`
-    );
+  `wss://weddings-dedicated-cpu-cds.trycloudflare.com/ws/room/${roomId}/?token=${token}`
+);
+
 
     socketRef.current = socket;
 
@@ -63,7 +66,8 @@ export default function Room() {
 
     try {
       const res = await fetch(
-        "http://127.0.0.1:8000/api/execution/run/",
+        "https://weddings-dedicated-cpu-cds.trycloudflare.com/api/execution/run/"
+,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

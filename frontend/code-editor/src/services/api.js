@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://weddings-dedicated-cpu-cds.trycloudflare.com";
 
 export async function loginUser(username, password) {
   const response = await fetch(`${BASE_URL}/auth/login`, {
@@ -19,7 +19,7 @@ export async function loginUser(username, password) {
 }
 
 export async function signupUser(username, password) {
-  const response = await fetch("http://127.0.0.1:8000/auth/signup", {
+  const response = await fetch(`${BASE_URL}/auth/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
