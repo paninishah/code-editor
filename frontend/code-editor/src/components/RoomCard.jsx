@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "") ||
+  "http://127.0.0.1:8000";
+
 export default function RoomCard({ room, onOpen, onDelete, onRename }) {
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState(room.name);
@@ -14,7 +18,7 @@ export default function RoomCard({ room, onOpen, onDelete, onRename }) {
 
     try {
       const res = await fetch(
-        `http://127.0.0.1:8000/api/workspace/${room.id}/rename/`,
+        `${API_BASE}/api/workspace/${room.id}/rename/`,
         {
           method: "POST",
           headers: {
@@ -47,7 +51,9 @@ export default function RoomCard({ room, onOpen, onDelete, onRename }) {
           autoFocus
         />
       ) : (
-        <h3 onClick={onOpen}>{room.name}</h3>
+        <h3 className="room-title" onClick={onOpen}>
+          {room.name}
+        </h3>
       )}
 
       <p className="room-owner">

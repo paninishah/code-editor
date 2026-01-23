@@ -32,12 +32,11 @@ export default function Auth() {
 
         navigate("/dashboard");
       } else {
-        await signupUser(username, password);
-
-        // after successful signup → switch to login
-        setMode("login");
-        setError("Signup successful. Please log in.");
-        setPassword("");
+        const data = await signupUser(username, password);
+        // auto-login after signup
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("username", data.username);
+        navigate("/dashboard");
       }
     } catch (err) {
       setError(err.message || "Something went wrong");
@@ -49,6 +48,10 @@ export default function Auth() {
   return (
     <div className="auth-root">
       <div className="auth-card">
+        <div className="auth-brand">
+          <span className="auth-dot">⦿</span>
+          <span className="auth-name">cord</span>
+        </div>
 
         <div className="auth-toggle">
           <button
@@ -73,7 +76,7 @@ export default function Auth() {
         </div>
 
         <h2 className="auth-title">
-          {mode === "login" ? "Welcome back" : "Create an account"}
+          {mode === "login" ? "Welcome back to cord" : "Create your cord account"}
         </h2>
 
         <div className="auth-form">

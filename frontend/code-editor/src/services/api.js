@@ -1,7 +1,9 @@
-const BASE_URL = "https://weddings-dedicated-cpu-cds.trycloudflare.com";
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "") ||
+  "http://127.0.0.1:8000";
 
 export async function loginUser(username, password) {
-  const response = await fetch(`${BASE_URL}/auth/login`, {
+  const response = await fetch(`${API_BASE}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,7 +21,7 @@ export async function loginUser(username, password) {
 }
 
 export async function signupUser(username, password) {
-  const response = await fetch(`${BASE_URL}/auth/signup`, {
+  const response = await fetch(`${API_BASE}/auth/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

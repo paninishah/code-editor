@@ -1,9 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
+import Header from "../components/Header";
 import RoomCard from "../components/RoomCard";
 import "./Dashboard.css";
 import { createRoom, joinRoom, fetchDashboard } from "../services/rooms";
+
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "") ||
+  "http://127.0.0.1:8000";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -53,7 +58,7 @@ export default function Dashboard() {
   async function handleDeleteRoom(roomId) {
     try {
       await fetch(
-        `http://127.0.0.1:8000/api/workspace/delete/${roomId}/`,
+        `${API_BASE}/api/workspace/delete/${roomId}/`,
         {
           method: "DELETE",
           headers: {
@@ -78,10 +83,16 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-root">
-      <header className="dashboard-header">
-        <h2>Welcome, {username} &gt;&gt;&gt;</h2>
-        <Button onClick={handleSignOut}>Sign Out</Button>
-      </header>
+      <Header
+        right={
+          <>
+            <span className="header-username">Hi, {username}</span>
+            <Button size="small" onClick={handleSignOut}>
+              Sign out
+            </Button>
+          </>
+        }
+      />
 
       <div className="dashboard-toggle">
         <button

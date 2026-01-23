@@ -1,11 +1,18 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import Header from "../components/Header";
 import CodeEditor from "../components/CodeEditor";
 import OutputPanel from "../components/OutputPanel";
 import Button from "../components/Button";
 import "./Room.css";
 
 const LANGUAGES = ["javascript", "python", "cpp", "c", "java"];
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL?.replace(/\/+$/, "") ||
+  "http://127.0.0.1:8000";
+const WS_BASE =
+  import.meta.env.VITE_WS_BASE_URL?.replace(/\/+$/, "") ||
+  "ws://127.0.0.1:8000";
 
 export default function Room() {
   const { roomId } = useParams();
@@ -24,9 +31,8 @@ export default function Room() {
     const token = localStorage.getItem("token");
 
     const socket = new WebSocket(
-  `wss://weddings-dedicated-cpu-cds.trycloudflare.com/ws/room/${roomId}/?token=${token}`
-);
-
+      `${WS_BASE}/ws/room/${roomId}/?token=${encodeURIComponent(token || "")}`
+    );
 
     socketRef.current = socket;
 
@@ -65,15 +71,11 @@ export default function Room() {
     setOutput("");
 
     try {
-      const res = await fetch(
-        "https://weddings-dedicated-cpu-cds.trycloudflare.com/api/execution/run/"
-,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ code, language }),
-        }
-      );
+      const res = await fetch(`${API_BASE}/api/execution/run/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code, language }),
+      });
 
       const data = await res.json();
       setOutput(data.output || "");
@@ -87,45 +89,44 @@ export default function Room() {
 
   return (
     <div className="room-root">
-      <header className="room-header">
-        <div className="room-id-box">
-          <span className="room-id-label">Room ID</span>
-          <span className="room-id-value">{roomId}</span>
-          <button
-            className="copy-room-btn"
-            onClick={() => navigator.clipboard.writeText(roomId)}
-          >
-            Copy
-          </button>
-        </div>
-
-        <div className="room-actions-right">
-          <select
-            value={language}
-            onChange={(e) => {
-              setLanguage(e.target.value);
-              sendSocket({
-                type: "language",
-                language: e.target.value,
-              });
-            }}
-          >
-            {LANGUAGES.map((l) => (
-              <option key={l} value={l}>
-                {l}
-              </option>
-            ))}
-          </select>
-
-          <Button size="small" onClick={runCode} disabled={running}>
-            {running ? "Running..." : "Run"}
-          </Button>
-
-          <Button size="small" onClick={() => navigate("/dashboard")}>
-            Exit
-          </Button>
-        </div>
-      </header>
+      <Header
+        right={
+          <>
+            <div className="room-id-box">
+              <span className="room-id-label">Room</span>
+              <span className="room-id-value">{roomId}</span>
+              <button
+                className="copy-room-btn"
+                onClick={() => navigator.clipboard.writeText(roomId)}
+              >
+                Copy
+              </button>
+            </div>
+            <select
+              value={language}
+              onChange={(e) => {
+                setLanguage(e.target.value);
+                sendSocket({
+                  type: "language",
+                  language: e.target.value,
+                });
+              }}
+            >
+              {LANGUAGES.map((l) => (
+                <option key={l} value={l}>
+                  {l}
+                </option>
+              ))}
+            </select>
+            <Button size="small" onClick={runCode} disabled={running}>
+              {running ? "Running..." : "Run"}
+            </Button>
+            <Button size="small" onClick={() => navigate("/dashboard")}>
+              Exit
+            </Button>
+          </>
+        }
+      />
 
       <main className="room-main">
         <div className="editor-pane">

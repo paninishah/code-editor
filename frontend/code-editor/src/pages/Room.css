@@ -1,22 +1,7 @@
 .room-root {
   height: 100vh;
-  background: var(--bg-main);
   display: flex;
   flex-direction: column;
-}
-
-/* Header */
-.room-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 24px;
-  border-bottom: 1px solid #1e1e1e;
-}
-
-.room-actions-left,
-.room-actions-right {
-  display: flex;
-  gap: 12px;
 }
 
 /* Main layout */
@@ -24,17 +9,15 @@
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  min-height: 0;
 }
 
 /* Editor */
 .editor-pane {
-  border-right: 1px solid #1e1e1e;
-}
-
-.editor-pane {
   display: flex;
   flex-direction: column;
   background: #0b0b0b;
+  border-right: 1px solid #1e1e1e;
 }
 
 /* Language bar */
@@ -62,7 +45,8 @@
 
 /* Output */
 .output-pane {
-  background: #000;
+  background: #020617;
+  border-left: 1px solid #020617;
 }
 
 .room-id-box {

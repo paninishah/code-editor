@@ -1,45 +1,50 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --bg-main: #000000;
-  --bg-surface: #121212;
+  --bg-main: #02040a;
+  --bg-surface: #0b0d18;
+  --bg-elevated: #0f1120;
 
-  --text-primary: #EDEDED;
-  --text-secondary: #B0B0B0;
+  --text-primary: #f5f7ff;
+  --text-secondary: #a3adcc;
+  --text-muted: #68718a;
 
-  --accent-main: #4CAF50;
-  --accent-hover: #66BB6A;
+  --accent-main: #4caf50;
+  --accent-hover: #66bb6a;
 
-  --font-ui: 'Inter', sans-serif;
-  --font-hero: 'IBM Plex Mono', monospace;
+  --font-ui: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-hero: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 body {
   margin: 0;
   font-family: var(--font-ui);
   color: var(--text-primary);
-
-  background-color: #000000;
-
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.18) 1.2px,
-    transparent 1.2px
-  );
-  background-size: 24px 24px;
+  background-color: var(--bg-main);
+  position: relative;
 }
 
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -1;
-
-  background-color: #000000;
-  background-image: radial-gradient(
-    rgba(255, 255, 255, 0.22) 1.2px,
-    transparent 1.2px
-  );
-  background-size: 24px 24px;
+  z-index: -2;
+  background:
+    radial-gradient(circle at top left, #26465333, transparent 55%),
+    radial-gradient(circle at top right, #2a9d8f26, transparent 55%),
+    radial-gradient(circle at bottom, #4caf5030, transparent 60%);
 }
 
-
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 26px 26px;
+  opacity: 0.7;
+  mix-blend-mode: soft-light;
+}
